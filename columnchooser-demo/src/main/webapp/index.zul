@@ -1,0 +1,56 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('demo.MyViewModel')">
+		<div style="color: red; margin-bottom: 20px;">
+			Drag and drop column to change grid's column order and column visibility
+		</div>
+		<hlayout>
+			<vlayout>
+				Visible Columns
+				<listbox model="@load(vm.visibleColumns)" width="300px" height="200px" droppable="true"
+					onDrop="@command('dropToVisibleColumns',item=event.dragged.attributes.item)">
+					<template name="model">
+						<listitem draggable="true" droppable="true"
+							label="@load(each)" attributes.item="@load(each)"
+							onDrop="@command('insertToVisibleColumns',item=event.dragged.attributes.item, base=each)"/>
+					</template>
+				</listbox>
+			</vlayout>
+			<vlayout>
+				Hidden Columns
+				<listbox model="@load(vm.hiddenColumns)" width="300px" height="200px" droppable="true"
+					onDrop="@command('dropToHiddenColumns',item=event.dragged.attributes.item)">
+					<template name="model">
+						<listitem draggable="true" droppable="true" 
+							label="@load(each)" attributes.item="@load(each)"
+							onDrop="@command('insertToHiddenColumns',item=event.dragged.attributes.item, base=each)"/>
+					</template>
+				</listbox>
+			</vlayout>
+		</hlayout>
+		<div>
+			Result
+		</div>
+		<grid model="@load(vm.beans)" height="500px">
+			<columns children="@load(vm.visibleColumns)">
+				<template name="children">
+					<column label="@load(each)"></column>
+				</template>
+			</columns>
+			<template name="model" var="bean" >
+				<row children="@init(vm.visibleColumns) @template(vm.getColumnType(each))">
+					<template name="label" var="column">
+						<label value="@load(vm.getValue(bean, column))"></label>
+					</template>
+					<template name="button" var="column">
+						<button label="@load(vm.getValue(bean, column))" onClick="@command('doClick', bean=bean, column=column)"></button>
+					</template>
+					<template name="checkbox" var="column">
+						<checkbox label="@load(vm.getValue(bean, column))" onCheck="@command('doCheck', bean=bean, column=column)"></checkbox>
+					</template>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>
