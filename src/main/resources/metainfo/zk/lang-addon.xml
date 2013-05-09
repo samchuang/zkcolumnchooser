@@ -1,0 +1,14 @@
+<language-addon>
+    <addon-name>columnchooser</addon-name>
+  	<version>
+		<version-class>org.zkoss.addon.columnchooser.Version</version-class>
+		<version-uid>0.0.1-SNAPSHOT</version-uid>
+		<zk-version>6.5.2</zk-version><!-- or later -->
+	</version>
+    
+	<language-name>xul/html</language-name>
+	<component>
+		<component-name>columnchooser</component-name> <!-- required -->
+		<component-class>org.zkoss.addon.columnchooser.Columnchooser</component-class> <!-- required -->
+	</component>
+</language-addon>

@@ -1,7 +1,7 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm')@init('demo.MyViewModel')">
+		viewModel="@id('vm')@init('test.MyViewModel')">
 		<div style="color: red; margin-bottom: 20px;">
 			Drag and drop column to change grid's column order and column visibility
 		</div>

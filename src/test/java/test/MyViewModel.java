@@ -1,4 +1,4 @@
-package demo;
+package test;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -15,9 +15,9 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.lang.Strings;
 import org.zkoss.zul.Messagebox;
 
+
 public class MyViewModel {
 	
-
 	ArrayList<Bean> _beans;
 	
 	HashMap<String, String> _columnType;
