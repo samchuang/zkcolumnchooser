@@ -10,5 +10,6 @@
 	<component>
 		<component-name>columnchooser</component-name> <!-- required -->
 		<component-class>org.zkoss.addon.columnchooser.Columnchooser</component-class> <!-- required -->
+		<extends>popup</extends>
 	</component>
 </language-addon>

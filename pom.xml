@@ -27,6 +27,7 @@
 			<name>ZK CE Repository</name>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
+		<!-- TODO: remove -->
 		<repository>
 			<id>ZK EVAL</id>
 			<name>ZK Evaluation Repository</name>
@@ -53,6 +54,12 @@
 			<version>${zk.version}</version>
 			<optional>true</optional>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.zkoss.zk</groupId> -->
+<!-- 			<artifactId>kmax</artifactId> -->
+<!-- 			<version>${zk.version}</version> -->
+<!-- 			<optional>true</optional> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>

@@ -1,19 +1,22 @@
 package test;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.mvel2.MVEL;
+import org.zkoss.addon.columnchooser.Columnchooser;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.lang.Strings;
-import org.zkoss.zul.Messagebox;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.Selectors;
+import org.zkoss.zk.ui.select.annotation.Wire;
 
 
 public class MyViewModel {
@@ -21,11 +24,13 @@ public class MyViewModel {
 	ArrayList<Bean> _beans;
 	
 	HashMap<String, String> _columnType;
-	HashMap<String, Serializable> _expressionCache;
 	
 	LinkedList<String> _columns;
-	LinkedList<String> _visibleColumns;
-	LinkedList<String> _hiddenColumns;
+	List<String> _visibleColumns;
+	List<String> _hiddenColumns;
+	
+	@Wire
+	Columnchooser columnchooser;
 	
 	@Init
 	public void init() {
@@ -34,8 +39,6 @@ public class MyViewModel {
 		_columns.add("b");
 		_columns.add("c");
 		_columns.add("d");
-		
-		_expressionCache = new HashMap<String, Serializable>(_columns.size());
 		
 		_columnType = new HashMap<String, String>(_columns.size());
 		_columnType.put("a", "checkbox");
@@ -55,88 +58,35 @@ public class MyViewModel {
 		}
 	}
 	
+	@AfterCompose
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+		Selectors.wireComponents(view, this, false);
+	}
+	
+	@Command
+	public void openColumnchooser(@BindingParam("ref") Component ref) {
+		columnchooser.open(ref);
+	}
+	
 	public List getBeans() {
 		return _beans;
 	}
 	
-	public List getVisibleColumns() {
-		return new ArrayList<String>(_visibleColumns);
+	public List<String> getVisibleColumns() {
+		return _visibleColumns;
 	}
 	
-	public List getHiddenColumns() {
-		return new ArrayList<String>(_hiddenColumns);
-	}
-	
-	public Object getValue(Object bean, String expression) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		System.out.println("bean [" + bean + "], expression [" + expression + "]");
-		if (!Strings.isEmpty(expression)) {
-			if (_expressionCache.containsKey(expression)) {
-				return MVEL.executeExpression(_expressionCache.get(expression), bean);
-			} else {
-				Serializable s = null;
-				_expressionCache.put(expression, s = MVEL.compileExpression(expression));
-				return MVEL.executeExpression(s, bean);
-			}
-		} else {
-			//why column is empty?
-		}
-		return null;
+	public List<String> getHiddenColumns() {
+		return _hiddenColumns;
 	}
 	
 	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns", "beans"})
-	public void dropToVisibleColumns(@BindingParam("item") String column) {
-		if (_hiddenColumns.contains(column)) {
-			_hiddenColumns.remove(column);
-			_visibleColumns.add(column);
-		}
-	} 
-	
-	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns", "beans"})
-	public void dropToHiddenColumns(@BindingParam("item") String column) {
-		if (_visibleColumns.contains(column)) {
-			_visibleColumns.remove(column);
-			_hiddenColumns.add(column);
-		}
-	}
-	
-	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns", "beans"})
-	public void insertToVisibleColumns(@BindingParam("item") String drag, @BindingParam("base") String drop) {
-		if (_hiddenColumns.contains(drag)) {
-			_hiddenColumns.remove(drag);
-		} else {
-			_visibleColumns.remove(drag);
-		}
-		append(drag, drop, _visibleColumns);
-//		int index = _visibleColumns.indexOf(drop);
-//		if (index >= 0) {
-//			_visibleColumns.add(index, _visibleColumns.set(index, drag));
-//		} else {
-//			_visibleColumns.add(drag);
-//		}
-	}
-	
-	private void append(String src, String after, List<String> list) {
-		int index = list.indexOf(after);
-		if (index >= 0) {
-			list.add(index, list.set(index, src));
-		} else {
-			list.add(src);
-		}
-	}
-	
-	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns", "beans"})
-	public void insertToHiddenColumns(@BindingParam("item") String drag, @BindingParam("base") String drop) {
-		if (_visibleColumns.contains(drag)) {
-			_visibleColumns.remove(drag);
-		} else {
-			_hiddenColumns.remove(drag);
-		}
-		append(drag, drop, _hiddenColumns);
-//		_hiddenColumns.add(_hiddenColumns.indexOf(drop), drag);
+	@NotifyChange({"visibleColumns", "beans"})
+	public void doColumnVisibilityChange(@BindingParam("visibleColumns") List<String> visibleColumns, @BindingParam("hiddenColumns") List<String> hiddenColumns) {
+		//redraw columns
+		_visibleColumns = visibleColumns;
+		_hiddenColumns = hiddenColumns;
+		System.out.println("doVisibleColumnChange");
 	}
 	
 	public String getColumnType(@BindingParam("value") String column) {
@@ -148,14 +98,16 @@ public class MyViewModel {
 	}
 	
 	@Command
-	public void doClick(@BindingParam("bean") Bean bean, @BindingParam("column") String column) {
-		System.out.println("debug");
-		Messagebox.show("value [" + MVEL.executeExpression(_expressionCache.get(column), bean) + "]");
+	public void doClick(@BindingParam("cell") Object value) {
+//		public void doClick(@BindingParam("bean") Bean bean, @BindingParam("column") String column) {
+		System.out.println("debug [" + value + "]");
+		
+//		Messagebox.show("value [" + MVEL.executeExpression(_expressionCache.get(column), bean) + "]");
 	}
 	
 	@Command
-	public void doCheck(@BindingParam("bean") Bean bean, @BindingParam("column") String column) {
-		System.out.println("debug");
-		Messagebox.show("value [" + MVEL.executeExpression(_expressionCache.get(column), bean) + "]");
+	public void doCheck(@BindingParam("cell") Object value) {
+		System.out.println("debug [" + value + "]");
+//		Messagebox.show("value [" + MVEL.executeExpression(_expressionCache.get(column), bean) + "]");
 	}
 }
