@@ -54,12 +54,13 @@
 			<version>${zk.version}</version>
 			<optional>true</optional>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.zkoss.zk</groupId> -->
-<!-- 			<artifactId>kmax</artifactId> -->
-<!-- 			<version>${zk.version}</version> -->
-<!-- 			<optional>true</optional> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkmax</artifactId>
+			<version>${zk.version}</version>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>

@@ -7,6 +7,7 @@ import org.zkoss.addon.columnchooser.ColumnVisibilityChangeEvent;
 import org.zkoss.addon.columnchooser.Columnchooser;
 import org.zkoss.addon.columnchooser.Columnchooser.ViewModel;
 import org.zkoss.bind.Binder;
+import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -29,7 +30,7 @@ public class ColumnchooserViewModel implements ViewModel {
 	
 	@Init
 	public void init(@ContextParam(ContextType.COMPONENT) Component component) {
-		_columnChooser = (Columnchooser)component;
+		_columnChooser = (Columnchooser)component.getParent();
 		init(new LinkedList<String>(_columnChooser.getVisibleColumns()), new LinkedList<String>(_columnChooser.getHiddenColumns()));
 	}
 	
@@ -41,8 +42,16 @@ public class ColumnchooserViewModel implements ViewModel {
 		_hiddenColumnsClone = hiddenColumnsClone;
 	}
 	
+	public void setVisibleColumns(List<String> visibleColumns) {
+		_visibleColumnsClone = new LinkedList<String>(visibleColumns);
+	}
+	
 	public List<String> getVisibleColumns() {
 		return _visibleColumnsClone;
+	}
+	
+	public void setHiddenColumns(List<String> hiddenColumns) {
+		_hiddenColumnsClone = new LinkedList<String>(hiddenColumns);
 	}
 	
 	public List<String> getHiddenColumns() {
@@ -198,7 +207,7 @@ public class ColumnchooserViewModel implements ViewModel {
 	public void cancel(@ContextParam(ContextType.BINDER) Binder binder) {
 		_columnChooser.close();
 		if (modified) {
-			init(_columnChooser);//revert properties: columns visibility etc..
+			init(new LinkedList<String>(_columnChooser.getVisibleColumns()), new LinkedList<String>(_columnChooser.getHiddenColumns()));//revert properties: columns visibility etc..
 			binder.postCommand("resetAllProperties", null);
 		}
 	}

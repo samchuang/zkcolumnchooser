@@ -54,33 +54,49 @@
 			});
 		});
 	]]></script>
-	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm')@init('test.MyViewModel')">
-		<div style="color: red; margin-bottom: 20px;">
-			Drag and drop column to change grid's column order and column visibility
-		</div>
-		<columnchooser id="columnchooser" visibleColumns="@init(vm.visibleColumns)" hiddenColumns="@init(vm.hiddenColumns)" onColumnVisibilityChange="@command('doColumnVisibilityChange', visibleColumns=event.visibleColumns, hiddenColumns=event.hiddenColumns)"></columnchooser>
-		<button label="Open Column chooser" onClick="@command('openColumnchooser', ref=self)">
-		</button>
-		<div>
-			POC
-		</div>
-		<grid model="@load(vm.beans)" height="500px">
+	<window apply="org.zkoss.bind.BindComposer" border="normal"
+		viewModel="@id('vm') @init('demo.ProfileViewModel')" hflex="1" vflex="1">
+		<caption label="Default Column Chooser">
+			<!-- default column chooser -->
+			<columnchooser id="columnchooser" visibleColumns="@load(vm.visibleColumnLabels)"
+				hiddenColumns="@load(vm.hiddenColumnLabels)"
+				onColumnVisibilityChange="@command('doColumnVisibilityChange', visibleColumns=event.visibleColumns, hiddenColumns=event.hiddenColumns)"></columnchooser>
+			<combobutton label="Column Chooser"
+				onClick="@command('openDefaultColumnChooser', ref=self)">
+				<!-- custom column chooser -->
+				<columnchooser template="/customColumnChooser.zul"
+					visibleColumns="@load(vm.visibleColumnLabels)" hiddenColumns="@load(vm.hiddenColumnLabels)"
+					onColumnVisibilityChange="@command('doColumnVisibilityChange', visibleColumns=event.visibleColumns, hiddenColumns=event.hiddenColumns)"></columnchooser>
+			</combobutton>
+		</caption>
+		<grid model="@load(vm.profiles)" height="500px">
 			<columns children="@load(vm.visibleColumns)">
-				<template name="children">
-					<column label="@load(each)"></column>
+				<template name="children" var="columnInfo">
+					<column label="@load(columnInfo.label)"></column>
 				</template>
 			</columns>
-			<template name="model" var="bean" >
-				<row children="@init(vm.visibleColumns) @template(vm.getColumnType(each))">
-					<template name="label" var="column">
-						<label value="@load(bean[column])"></label>
+			<template name="model" var="profile">
+				<row children="@init(vm.visibleColumns) @template(each.templateName)">
+					<template name="label" var="columnInfo">
+						<label value="@load(profile[columnInfo.value])"></label>
 					</template>
-					<template name="button" var="column">
-						<button label="@load(bean[column])" onClick="@command('doClick', cell=bean[column])"></button>
+					<template name="birth" var="columnInfo">
+						<datebox value="@load(profile[columnInfo.value])"
+							onChange="@command('setBirth', profile=profile, birth=event.target.value)"></datebox>
 					</template>
-					<template name="checkbox" var="column">
-						<checkbox label="@load(bean[column])" onCheck="@command('doCheck', cell=bean[column])"></checkbox>
+					<template name="married" var="columnInfo">
+						<checkbox checked="@load(profile[columnInfo.value])"
+							onCheck="@command('setMarried', profile=profile, married=event.checked)"
+							label="Married"></checkbox>
+					</template>
+					<template name="skills" var="columnInfo">
+						<chosenbox model="@load(vm.allSkills)"
+							onSelect="@command('setSkills', profile=profile, skills=event.selectedObjects)"
+							selectedObjects="@load(profile[columnInfo.value])" hflex="true">
+							<template name="model" var="item">
+								<label value="@load(item)"></label>
+							</template>
+						</chosenbox>
 					</template>
 				</row>
 			</template>

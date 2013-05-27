@@ -1,5 +1,5 @@
 <zk xmlns:n="native">
-	<vlayout spacing="5px">
+	<vlayout spacing="5px" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.addon.columnchooser.impl.ColumnchooserViewModel')">
 		<n:span>Choose the fields to display.</n:span>
 		<hlayout spacing="10px">
 			<vlayout>

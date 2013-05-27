@@ -1,0 +1,48 @@
+<zk xmlns:n="native">
+	<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.addon.columnchooser.impl.ColumnchooserViewModel')"
+		title="Edit Columns" border="normal" mode="highlighted" position="center">
+		<vlayout spacing="5px">
+			<label>Choose the fields to display.</label>
+			<hlayout spacing="10px">
+				<vlayout>
+					Available fields:
+					<listbox model="@load(vm.hiddenColumns)" width="150px"
+						height="200px" droppable="true" selectedItem="@bind(vm.selectedHiddenColumn)"
+						onDrop="@command('dropToHiddenColumns', column=event.dragged.value)">
+						<template name="model">
+							<listitem draggable="true" droppable="true" label="@load(each)" value="@load(each)"
+								attributes.item="@load(each)"
+								onDrop="@command('insertToHiddenColumns', drag=event.dragged.value, drop=each)" />
+						</template>
+					</listbox>
+				</vlayout>
+				<vlayout spacing="5px" width="90px">
+					<separator height="20px"></separator>
+					<button disabled="@load(vm.addDisabled)" onClick="@command('addSelectedHiddenColumnToVisibleColumn')"
+							label="Add &gt;&gt;" width="100%" mold="trendy"></button>
+					<button disabled="@load(vm.removeDisabled)" onClick="@command('removeSelectedVisibleColumnToHiddenColumn')"
+							label="&lt;&lt; Remove" width="100%" mold="trendy"></button>
+					<button disabled="@load(vm.moveUpDisabled)" onClick="@command('moveSelectedVisibleColumnUp')"
+							label="Move Up" width="100%" mold="trendy"></button>
+					<button disabled="@load(vm.moveDownDisabled)" onClick="@command('moveSelectedVisibleColumnDown')"
+							label="Move Down" width="100%" mold="trendy"></button>
+				</vlayout>
+				<vlayout>
+					Displayed Columns:
+					<listbox model="@load(vm.visibleColumns)" width="150px"
+						height="200px" droppable="true" selectedItem="@bind(vm.selectedVisibleColumn)"
+						onDrop="@command('dropToVisibleColumns', column=event.dragged.value)">
+						<template name="model">
+							<listitem draggable="true" droppable="true" label="@load(each)" value="@load(each)"
+								onDrop="@command('insertToVisibleColumns', drag=event.dragged.value, drop=each)" />
+						</template>
+					</listbox>
+				</vlayout>
+			</hlayout>
+			<hbox pack="end" width="100%" spacing="5px">
+				<button onClick="@command('ok')" label="OK" mold="trendy" width="75px"></button>
+				<button onClick="@command('cancel')" label="Cancel" mold="trendy" width="75px"></button>
+			</hbox>
+		</vlayout>
+	</window>
+</zk>
