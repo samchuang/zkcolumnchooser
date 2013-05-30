@@ -6,7 +6,7 @@
 	<artifactId>columnchooser</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<zk.version>6.5.2</zk.version>
+		<zk.version>6.5.0</zk.version>
 		<commons-io>1.3.1</commons-io>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-${project.version}-FL-${maven.build.timestamp}</packname>
@@ -27,7 +27,6 @@
 			<name>ZK CE Repository</name>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
-		<!-- TODO: remove -->
 		<repository>
 			<id>ZK EVAL</id>
 			<name>ZK Evaluation Repository</name>

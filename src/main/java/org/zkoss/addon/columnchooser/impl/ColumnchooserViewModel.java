@@ -1,3 +1,17 @@
+/* ColumnchooserViewModel.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		May 30, 2013 11:42:43 AM , Created by Sam
+
+Copyright (C) 2013 Potix Corporation. All Rights Reserved.
+
+{{IS_RIGHT
+}}IS_RIGHT
+ */
 package org.zkoss.addon.columnchooser.impl;
 
 import java.util.LinkedList;
@@ -7,7 +21,6 @@ import org.zkoss.addon.columnchooser.ColumnVisibilityChangeEvent;
 import org.zkoss.addon.columnchooser.Columnchooser;
 import org.zkoss.addon.columnchooser.Columnchooser.ViewModel;
 import org.zkoss.bind.Binder;
-import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;

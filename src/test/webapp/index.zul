@@ -56,7 +56,7 @@
 	]]></script>
 	<window apply="org.zkoss.bind.BindComposer" border="normal"
 		viewModel="@id('vm') @init('demo.ProfileViewModel')" hflex="1" vflex="1">
-		<caption label="Default Column Chooser">
+		<caption label="Column Chooser">
 			<!-- default column chooser -->
 			<columnchooser id="columnchooser" visibleColumns="@load(vm.visibleColumnLabels)"
 				hiddenColumns="@load(vm.hiddenColumnLabels)"

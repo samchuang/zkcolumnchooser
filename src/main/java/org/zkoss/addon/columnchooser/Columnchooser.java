@@ -1,3 +1,17 @@
+/* Columnchooser.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		May 30, 2013 11:42:43 AM , Created by Sam
+
+Copyright (C) 2013 Potix Corporation. All Rights Reserved.
+
+{{IS_RIGHT
+}}IS_RIGHT
+ */
 package org.zkoss.addon.columnchooser;
 
 import java.util.Collections;
@@ -10,7 +24,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.impl.BinderUtil;
+import org.zkoss.bind.impl.BinderImpl;
 import org.zkoss.lang.Library;
 import org.zkoss.lang.Objects;
 import org.zkoss.lang.Strings;
@@ -53,6 +67,7 @@ public class Columnchooser extends Popup {
 				break;
 			}
 		}
+		
 		if (!setTemplate && _cave == null) {
 			initCave();
 		}
@@ -61,7 +76,7 @@ public class Columnchooser extends Popup {
 	protected void initCave() {
 		getChildren().clear();
 		_cave = Executions.createComponents(_templ, this, null);
-		_caveBinder = BinderUtil.getBinder(_cave);
+		_caveBinder = (Binder)_cave.getAttribute(BinderImpl.BINDER);
 		if (_caveBinder == null) {
 			throw new NullPointerException("binder is null, [" + _templ + "] should contains binder and view model");
 		}

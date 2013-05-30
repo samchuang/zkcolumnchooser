@@ -1,3 +1,17 @@
+/* Profile.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		May 30, 2013 11:42:43 AM , Created by Sam
+
+Copyright (C) 2013 Potix Corporation. All Rights Reserved.
+
+{{IS_RIGHT
+}}IS_RIGHT
+ */
 package demo;
 
 import java.util.ArrayList;
@@ -9,7 +23,6 @@ import java.util.Set;
 public class Profile {
 	
 	String name;
-//	int age;
 	Date birth;
 	boolean married;
 	List<Skill> skills;
@@ -17,7 +30,6 @@ public class Profile {
 	public Profile(String name, int birthYear, int birthMonth, int birthDayOfMonth, boolean married,
 			Skill[] skills) {
 		this.name = name;
-//		this.age = Calendar.getInstance().get(Calendar.YEAR) - birthYear;
 		this.birth = new GregorianCalendar(birthYear, birthMonth, birthDayOfMonth).getTime();
 		this.married = married;
 		ArrayList<Skill> list = new ArrayList<Skill>();
@@ -34,14 +46,6 @@ public class Profile {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-//	public int getAge() {
-//		return age;
-//	}
-//	
-//	public void setAge(int age) {
-//		this.age = age;
-//	}
 	
 	public Date getBirth() {
 		return birth;
