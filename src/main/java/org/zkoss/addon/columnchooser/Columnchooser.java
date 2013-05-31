@@ -91,7 +91,7 @@ public class Columnchooser extends Popup {
 		if (!Objects.equals(_visibleColumns, columns)) {
 			_visibleColumns = columns != null ? new LinkedList<String>(columns) : null;
 			
-			if (reload) {
+			if (reload && _caveViewModel != null && _caveBinder != null) {
 				_caveViewModel.setVisibleColumns(columns);
 				_caveBinder.postCommand("resetAllProperties", null);
 			}
@@ -111,7 +111,7 @@ public class Columnchooser extends Popup {
 		if (!Objects.equals(_hiddenColumns, columns)) {
 			_hiddenColumns = columns != null ? new LinkedList<String>(columns) : null;
 			
-			if (reload) {
+			if (reload && _caveViewModel != null && _caveBinder != null) {
 				_caveViewModel.setHiddenColumns(columns);
 				_caveBinder.postCommand("resetAllProperties", null);
 			}
@@ -129,6 +129,9 @@ public class Columnchooser extends Popup {
 		
 		if (!Objects.equals(_templ, uri)) {
 			_templ = uri;
+		}
+		
+		if (_cave == null && getDesktop() != null) {
 			initCave();
 		}
 	}
