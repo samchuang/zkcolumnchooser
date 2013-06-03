@@ -102,7 +102,6 @@ public class ProfileViewModel {
 			columnInfo.setVisible(false);
 			_columns.add(columnInfo);
 		}
-		boolean debug = true;
 	}
 	
 	@Command

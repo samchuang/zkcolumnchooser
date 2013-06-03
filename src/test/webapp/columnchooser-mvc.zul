@@ -1,0 +1,11 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Columnchooser with MVC" border="normal" apply="demo.ProfileCtrl">
+	<button id="button" label="Column Chooser"></button>
+	<columnchooser id="columnchooser"></columnchooser>
+	<listbox id="listbox">
+		<listhead id="listhead">
+		</listhead>
+	</listbox>
+</window>
+</zk>
