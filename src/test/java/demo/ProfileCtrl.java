@@ -126,7 +126,6 @@ public class ProfileCtrl extends SelectorComposer<Component> {
 						});
 						
 						Listcell cell = new Listcell();
-						cell.setHflex("true");
 						cell.appendChild(chosebox);
 						item.appendChild(cell);
 					}
@@ -137,7 +136,7 @@ public class ProfileCtrl extends SelectorComposer<Component> {
 	
 	@Listen("onClick=#button")
 	public void openColumnChooser() {
-		columnchooser.open(button, "after_end");
+		columnchooser.open(button, "end_before");
 	}
 	
 	@Listen("onColumnVisibilityChange=#columnchooser")

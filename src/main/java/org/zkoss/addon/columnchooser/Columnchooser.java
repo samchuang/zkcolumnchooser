@@ -264,40 +264,40 @@ public class Columnchooser extends Popup {
 		 * Used with binding: @command('dropToVisibleColumns', column=event.dragged.value)
 		 * 
 		 * The implementation should annotate with:
-		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns"})
+		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled"})
 		 */
 		@Command
-		@NotifyChange({"visibleColumns", "hiddenColumns"})
+		@NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled"})
 		public void dropToVisibleColumns(@BindingParam("column") String column);
 		
 		/**
 		 * Used with binding: @command('dropToHiddenColumns', column=event.dragged.value)
 		 * 
 		 * The implementation should annotate with:
-		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns"})
+		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 		 */
 		@Command
-		@NotifyChange({"visibleColumns", "hiddenColumns"})
+		@NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 		public void dropToHiddenColumns(@BindingParam("column") String column);
 		
 		/**
 		 * Used with binding: @command('insertToVisibleColumns', drag=event.dragged.value, drop=each)
 		 * 
 		 * The implementation should annotate with:
-		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns"})
+		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled", "moveUpDisabled", "moveDownDisabled"})
 		 */
 		@Command
-		@NotifyChange({"visibleColumns", "hiddenColumns"})
+		@NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled", "moveUpDisabled", "moveDownDisabled"})
 		public void insertToVisibleColumns(@BindingParam("drag") String drag, @BindingParam("drop") String drop);
 		
 		/**
 		 * Used with binding: @command('insertToHiddenColumns', drag=event.dragged.value, drop=each)
 		 * 
 		 * The implementation should annotate with:
-		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns"})
+		 * @Command and @NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 		 */
 		@Command
-		@NotifyChange({"visibleColumns", "hiddenColumns"})
+		@NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 		public void insertToHiddenColumns(@BindingParam("drag") String drag, @BindingParam("drop") String drop);
 		
 		/**

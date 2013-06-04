@@ -27,6 +27,7 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.lang.Objects;
 import org.zkoss.lang.Strings;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
@@ -152,30 +153,41 @@ public class ColumnchooserViewModel implements ViewModel {
 	}
 	
 	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns"})
+	@NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled"})
 	public void dropToVisibleColumns(@BindingParam("column") String column) {
 		if (_hiddenColumnsClone.contains(column)) {
 			_hiddenColumnsClone.remove(column);
 			_visibleColumnsClone.add(column);
 			modified = true;
+			
+			if (Objects.equals(column, _selectedHiddenColumn)) {
+				_selectedHiddenColumn = null;
+			}
 		}
 	} 
 	
 	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns"})
+	@NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 	public void dropToHiddenColumns(@BindingParam("column") String column) {
 		if (_visibleColumnsClone.contains(column)) {
 			_visibleColumnsClone.remove(column);
 			_hiddenColumnsClone.add(column);
 			modified = true;
+			
+			if (Objects.equals(column, _selectedVisibleColumn)) {
+				_selectedVisibleColumn = null;
+			}
 		}
 	}
 	
 	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns"})
+	@NotifyChange({"visibleColumns", "hiddenColumns", "selectedHiddenColumn", "addDisabled", "moveUpDisabled", "moveDownDisabled"})
 	public void insertToVisibleColumns(@BindingParam("drag") String drag, @BindingParam("drop") String drop) {
 		if (_hiddenColumnsClone.contains(drag)) {
 			_hiddenColumnsClone.remove(drag);
+			if (Objects.equals(drag, _selectedHiddenColumn)) {
+				_selectedHiddenColumn = null;
+			}
 		} else {
 			_visibleColumnsClone.remove(drag);
 		}
@@ -184,10 +196,13 @@ public class ColumnchooserViewModel implements ViewModel {
 	}
 	
 	@Command
-	@NotifyChange({"visibleColumns", "hiddenColumns"})
+	@NotifyChange({"visibleColumns", "hiddenColumns", "selectedVisibleColumn", "removeDisabled", "moveUpDisabled", "moveDownDisabled"})
 	public void insertToHiddenColumns(@BindingParam("drag") String drag, @BindingParam("drop") String drop) {
 		if (_visibleColumnsClone.contains(drag)) {
 			_visibleColumnsClone.remove(drag);
+			if (Objects.equals(drag, _selectedVisibleColumn)) {
+				_selectedVisibleColumn = null;
+			}
 		} else {
 			_hiddenColumnsClone.remove(drag);
 		}
