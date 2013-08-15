@@ -2,6 +2,6 @@ Column Chooser
 ========
 License
 -------
-This software is released under the [GPL 3.0 license] [1].
+ZK Column Chooser Component is released under the [LGPL Version 2.1 license] [1].
 
-[1] http://www.gnu.org/licenses/gpl-3.0.html
+[1] http://www.gnu.org/licenses/lgpl-2.1.html
